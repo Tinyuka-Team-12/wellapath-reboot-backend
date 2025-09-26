@@ -12,3 +12,45 @@ router.get('/nearby', (req, res) => {
   res.json({ lat, lng, type, data: [], note: 'nearby search stub' })
 })
 export default router
+
+
+
+/**
+ * @openapi
+ * /api/geo/reverse:
+ *   get:
+ *     summary: Reverse geocode via Nominatim
+ *     parameters:
+ *       - in: query
+ *         name: lat
+ *         required: true
+ *         schema: { type: number }
+ *       - in: query
+ *         name: lng
+ *         required: true
+ *         schema: { type: number }
+ *     responses:
+ *       200:
+ *         description: Reverse geocode result
+ * /api/geo/nearby:
+ *   get:
+ *     summary: Nearby places via Nominatim
+ *     parameters:
+ *       - in: query
+ *         name: lat
+ *         required: true
+ *         schema: { type: number }
+ *       - in: query
+ *         name: lng
+ *         required: true
+ *         schema: { type: number }
+ *       - in: query
+ *         name: type
+ *         required: true
+ *         schema:
+ *           type: string
+ *           enum: [clinic, pharmacy]
+ *     responses:
+ *       200:
+ *         description: Nearby places
+ */
