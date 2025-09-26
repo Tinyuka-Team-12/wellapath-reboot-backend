@@ -2,12 +2,16 @@ import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
 import { prisma } from './lib/prisma'   // <— add this
-import api from './routes/index'            // <— we’ll create routes/index.ts in step 3
+import api from './routes/index'        
+import swaggerUi from 'swagger-ui-express'
+import { swaggerSpec } from './config/swagger'    // <— we’ll create routes/index.ts in step 3
 
 const app = express()
 app.use(helmet())
 app.use(cors())
 app.use(express.json())
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, { explorer: true }))
 
 // Optional root message
 app.get('/', (_req, res) => {
