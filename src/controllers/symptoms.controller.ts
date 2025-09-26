@@ -1,12 +1,38 @@
-// src/controllers/symptoms.controller.ts
 import { Request, Response } from 'express'
+import { prisma } from '../lib/prisma'
 import { createSymptomSchema } from '../validators/symptoms.schema'
-export const listSymptoms = async (_req: Request, res: Response) => res.json({ data: [] })
-export const createSymptom = async (req: Request, res: Response) => {
-  const parse = createSymptomSchema.safeParse(req.body)
-  if (!parse.success) return res.status(400).json({ error: 'Invalid payload', details: parse.error.flatten() })
-  res.status(201).json({ data: { id: 'stub', ...parse.data } })
+
+export const listSymptoms = async (req: Request, res: Response) => {
+  const userId = req.user?.sub
+  if (!userId) return res.status(401).json({ error: 'Unauthorized' })
+  const data = await prisma.symptomReport.findMany({
+    where: { userId },
+    orderBy: { createdAt: 'desc' }
+  })
+  res.json({ data })
 }
+
+export const createSymptom = async (req: Request, res: Response) => {
+  const userId = req.user?.sub
+  if (!userId) return res.status(401).json({ error: 'Unauthorized' })
+
+  const parsed = createSymptomSchema.safeParse(req.body)
+  if (!parsed.success) {
+    return res.status(400).json({ error: 'Invalid payload', details: parsed.error.flatten() })
+  }
+
+  const created = await prisma.symptomReport.create({
+    data: { userId, ...parsed.data }
+  })
+
+  res.status(201).json({ data: created })
+}
+
 export const analyzeSymptoms = async (_req: Request, res: Response) => {
-  res.json({ possible_causes: [], recommendations: [], raw: { message: 'Analyzer stub' } })
+  // Placeholder; returns normalized shape for FE
+  res.json({
+    possible_causes: [],
+    recommendations: [],
+    raw: { message: 'Analyzer not yet connected' }
+  })
 }
