@@ -1,7 +1,10 @@
-// symptoms.routes.ts
 import { Router } from 'express'
+import { listSymptoms, createSymptom, analyzeSymptoms } from '../controllers/symptoms.controller'
+
 const router = Router()
-router.get('/', (_req, res) => res.json({ data: [] }))
-router.post('/', (_req, res) => res.status(201).json({ data: { id: 'stub' } }))
-router.post('/analyze', (_req, res) => res.json({ possible_causes: [], recommendations: [], raw: {} }))
+
+router.get('/', listSymptoms)
+router.post('/', createSymptom)
+router.post('/analyze', analyzeSymptoms)
+
 export default router
