@@ -28,8 +28,7 @@ export const createSymptom = async (req: Request, res: Response) => {
     data: {
       userId,
       description,
-      // default to a safe value when not provided
-      severity: severity ?? 'mild',            // <- key line
+      severity: severity ?? 'mild',
       gender,
       yearOfBirth,
       meta: meta as Prisma.InputJsonValue | undefined
@@ -40,10 +39,5 @@ export const createSymptom = async (req: Request, res: Response) => {
 }
 
 export const analyzeSymptoms = async (_req: Request, res: Response) => {
-  // Placeholder; returns normalized shape for FE
-  res.json({
-    possible_causes: [],
-    recommendations: [],
-    raw: { message: 'Analyzer not yet connected' }
-  })
+  res.json({ possible_causes: [], recommendations: [], raw: { message: 'Analyzer not yet connected' } })
 }
