@@ -1,34 +1,31 @@
+// prisma/seed.ts
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
-  await prisma.user.upsert({
-    where: { email: 'admin@wellapath.local' },
-    update: {},
-    create: { email: 'admin@wellapath.local', role: 'ADMIN' },
-  })
+  // Clinics
+  const clinicCount = await prisma.clinic.count()
+  if (clinicCount === 0) {
+    await prisma.clinic.createMany({
+      data: [
+        { id: 'seedc1', name: 'Wella Clinic Central', lat: 0.3476, lng: 32.5825, address: 'Kampala Central', premium: true,  createdAt: new Date() },
+        { id: 'seedc2', name: 'HealthCare East',     lat: 0.3269, lng: 32.6070, address: 'Nakawa',          premium: false, createdAt: new Date() },
+      ],
+      skipDuplicates: true
+    })
+  }
 
-  const clinics = [
-    { name: 'Wella Clinic Central', lat: 0.3476, lng: 32.5825, address: 'Kampala Central', premium: true },
-    { name: 'HealthCare East',      lat: 0.3269, lng: 32.6070, address: 'Nakawa',          premium: false },
-  ]
-
-  const pharmacies = [
-    { name: 'Trust Pharmacy', lat: 0.3320, lng: 32.5700, address: 'Wandegeya', premium: false },
-    { name: 'Prime Meds',     lat: 0.3500, lng: 32.6000, address: 'Bukoto',    premium: true },
-  ]
-
-  await prisma.clinic.createMany({ data: clinics, skipDuplicates: true })
-  await prisma.pharmacy.createMany({ data: pharmacies, skipDuplicates: true })
+  // Pharmacy
+  const pharmCount = await prisma.pharmacy.count()
+  if (pharmCount === 0) {
+    await prisma.pharmacy.createMany({
+      data: [
+        { id: 'seedp1', name: 'Prime Meds',   lat: 0.3500, lng: 32.6000, address: 'Bukoto', premium: true,  createdAt: new Date() },
+        { id: 'seedp2', name: 'Trust Pharmacy', lat: 0.3300, lng: 32.5800, address: 'Ntinda', premium: false, createdAt: new Date() },
+      ],
+      skipDuplicates: true
+    })
+  }
 }
 
-main()
-  .then(async () => {
-    console.log('Seed complete')
-    await prisma.$disconnect()
-  })
-  .catch(async (e) => {
-    console.error('Seed failed:', e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+main().finally(() => prisma.$disconnect())
