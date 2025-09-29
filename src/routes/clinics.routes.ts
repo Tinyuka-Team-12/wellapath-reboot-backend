@@ -7,3 +7,15 @@ router.get('/', async (_req, res) => {
   res.json({ data })
 })
 export default router
+
+
+
+/**
+ * @openapi
+ * /api/clinics:
+ *   get:
+ *     summary: List clinics
+ *     responses:
+ *       200:
+ *         description: Array of clinics
+ */
