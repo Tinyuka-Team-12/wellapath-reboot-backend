@@ -213,6 +213,6 @@ Invoke-RestMethod "$BASE/api/symptoms"
 ## License & Contacts
 
 © WellaPath. Internal use.
-Contact: [backend@wellapath.com](mailto:backend@wellapath.com), [ops@wellapath.com](mailto:ops@wellapath.com)
+Contact: [backend@wellapath.com](mailto:backend@wellapath.com)
 
 ```
