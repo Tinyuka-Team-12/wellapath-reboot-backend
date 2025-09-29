@@ -216,15 +216,3 @@ Invoke-RestMethod "$BASE/api/symptoms"
 Contact: [backend@wellapath.com](mailto:backend@wellapath.com), [ops@wellapath.com](mailto:ops@wellapath.com)
 
 ```
-
----
-
-## What’s next (checklist)
-
-- [ ] Share the **Frontend Integration Guide** with FE (above).
-- [ ] Add the **README.md** to the repo (replace existing if needed).
-- [ ] Confirm FE can hit `/api/clinics`, `/api/pharmacy`, `/api/symptoms` on staging.
-- [ ] Once ApiMedic/Infermedica creds land, we’ll flip the analyzer flag and align FE’s UI flows.
-
-Want me to save the FE guide as a PDF too, or commit the README for you in a new branch (so we keep main safe)?
-```
