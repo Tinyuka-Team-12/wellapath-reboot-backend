@@ -214,5 +214,3 @@ Invoke-RestMethod "$BASE/api/symptoms"
 
 © WellaPath. Internal use.
 Contact: [backend@wellapath.com](mailto:backend@wellapath.com)
-
-```
